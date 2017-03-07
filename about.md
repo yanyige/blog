@@ -4,12 +4,13 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+[极道科技首页](https://xtaotech.com/)
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jekyll" %} /
-[minima](https://github.com/jekyll/minima)
+[时代教育公务员考试系统](https://yanyige.github.io/TimeEdu/)
 
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+[东北师范大学留日预校](https://lryx.nenu.edu.cn/)
+
+这里是我的github地址:
+{% include icon-github.html username="yanyige" %}
+
+[本项目source code](https://github.com/yanyige/blog)
