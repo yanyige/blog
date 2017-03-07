@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2017-03-07T15:27:09+08:00</updated><id>/</id><title type="html">@YANYIGE</title><subtitle>欢迎来到我的个人博客，这里会更新关于我的一切~ 欢迎订阅！
+</subtitle><entry><title type="html">jQuery源码分析 (第二部分)</title><link href="/2017/03/06/jQuery%E6%BA%90%E7%A0%81-%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86.html" rel="alternate" type="text/html" title="jQuery源码分析 (第二部分)" /><published>2017-03-06T00:00:00+08:00</published><updated>2017-03-06T00:00:00+08:00</updated><id>/2017/03/06/jQuery%E6%BA%90%E7%A0%81(%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86)</id><content type="html" xml:base="/2017/03/06/jQuery%E6%BA%90%E7%A0%81-%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86.html">&lt;h1 id=&quot;第一章-构造jquery对象&quot;&gt;第一章 构造jQuery对象&lt;/h1&gt;
+&lt;p&gt;jQuery对象是一个类数组对象，含有连续的整型属性、length属性和大量的jQuery方法。jQuery对象由构造函数jQuery()创建，$()则是jQuery()的缩写。&lt;/p&gt;
+&lt;h2 id=&quot;21-构造函数jquery&quot;&gt;2.1 构造函数jQuery()&lt;/h2&gt;
+&lt;p&gt;如果调用构造函数jQuery时传入的参数不同，创建jQuery对象的逻辑也会不同，构造函数jQuery有7种方法。如下：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;jQuery( selector [, context])接受一个css表达式和一个可选的选择器上下文，返回了一个包含匹配DOM元素的jQuery对象。&lt;/li&gt;
+  &lt;li&gt;jQuery (html [,ownerDocument])、jQuery(html, props) 创建一个DOM元素&lt;/li&gt;
+  &lt;li&gt;jQuery( element)、jQuery( elementArray ) 如果传入一个DOM元素或者DOM数组，则会把DOM元素封装到jQuery对象中并且返回&lt;/li&gt;
+  &lt;li&gt;jQuery( callback )&lt;/li&gt;
+  &lt;li&gt;jQuery( jQuery object )&lt;/li&gt;
+  &lt;li&gt;jQUery( )&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;211-jquery-selector--context&quot;&gt;2.1.1 jQuery( selector [, context])&lt;/h3&gt;
+&lt;p&gt;如果传入一个字符串参数，jQuery会检查这个字符串是选择器还是html代码，如果是选择器表达式，则遍历文档，查找与之匹配的DOM元素，并创建一个包含了这些DOM元素引用的jQuery对象；如果没有匹配的对象，则会创建一个空jQuery对象。下一节介绍参数是HTML代码的情况。&lt;br /&gt;
+默认情况下，对匹配元素的查找将会从document对象开始，即查找整个文档树，不过也可以传入第二个参数context来限定查找范围。例如，可以这样限制查找范围。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$('div.foo').click(function() {
+    $('span', this).addClass('bar');
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;方法find是调用CSS选择器引擎Sizzle实现，会在第三章进行介绍和分析。&lt;/p&gt;
+&lt;h3 id=&quot;212-jquery--html-ownerdocument-jquery-html-props-&quot;&gt;2.1.2 jQuery ( html [,ownerDocument] )、jQuery( html, props )&lt;/h3&gt;
+&lt;p&gt;如果传入的参数是一段html代码，jQuery则会尝试用这段HTML代码创建新的DOM元素，并且创建一个包含了这些DOM元素引入的jQuery对象。&lt;br /&gt;
+第二个参数ownerDocument用于指定创建的新的DOM元素的文档对象，如果不传入，则默认为当前文档对象。&lt;br /&gt;
+第二个参数还可以是props。属性可以是任意的时间类型（如”click”）还可以有下面的特殊属性:val, css, html, text, data, width, height, offset, 对应的jQuery方法: .val(), .css(), .html(), .text(), data(), width(), height(), offset()将会执行。举个梨子：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$('&amp;lt;div&amp;gt;', {
+    &quot;class&quot;: &quot;test&quot;,
+    text: &quot;click me&quot;,
+    click: function() {
+        $(this).toggleClass(&quot;test&quot;);
+    }
+}).appendTo(&quot;body&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;213-jquery-elementjquery-elementarray-&quot;&gt;2.1.3 jQuery( element)、jQuery( elementArray )&lt;/h3&gt;
+&lt;p&gt;如果传入一个DOM元素或者DOM数组，则会把DOM元素封装到jQuery对象中并且返回。&lt;/p&gt;
+
+&lt;h3 id=&quot;214-jquery-object-&quot;&gt;2.1.4 jQuery( object )&lt;/h3&gt;
+&lt;p&gt;如果传入一个普通的jQuery对象，则会把这个对象封装jQuery对象中并且返回。
+举个梨子:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var foo = {foo: 'bar', hello: 'world'};
+
+var $foo = $(foo);
+
+$foo.on('custom', function(){
+    console.log('custom event is called');
+});
+
+$foo.triggle('custom');
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;215-jquery-callback-&quot;&gt;2.1.5 jQuery( callback )&lt;/h3&gt;
+&lt;p&gt;如果传入一个函数，则在document上绑定一个ready事件监听函数，当DOM结构加载完成时执行。ready事件触发要早于load事件。ready事件并不是浏览器的原生事件，而是DOMContentLoaded事件、onreadystatechange事件和函数doScrollCheck()的统称。将在后面的学习中介绍。&lt;/p&gt;
+
+&lt;h3 id=&quot;216-jquery-jquery-object-&quot;&gt;2.1.6 jQuery( jQuery object )&lt;/h3&gt;
+&lt;p&gt;如果传入一个jQuery对象，则创建这个jQuery对象的一个副本并且返回，副本与传入的jQuery对象引入的同一个元素。&lt;/p&gt;</content><author><name></name></author><summary type="html">第一章 构造jQuery对象 jQuery对象是一个类数组对象，含有连续的整型属性、length属性和大量的jQuery方法。jQuery对象由构造函数jQuery()创建，$()则是jQuery()的缩写。 2.1 构造函数jQuery() 如果调用构造函数jQuery时传入的参数不同，创建jQuery对象的逻辑也会不同，构造函数jQuery有7种方法。如下： jQuery( selector [, context])接受一个css表达式和一个可选的选择器上下文，返回了一个包含匹配DOM元素的jQuery对象。 jQuery (html [,ownerDocument])、jQuery(html, props) 创建一个DOM元素 jQuery( element)、jQuery( elementArray ) 如果传入一个DOM元素或者DOM数组，则会把DOM元素封装到jQuery对象中并且返回 jQuery( callback ) jQuery( jQuery object ) jQUery( )</summary></entry><entry><title type="html">jQuery源码分析 (第一部分)</title><link href="/2017/03/06/jQuery%E6%BA%90%E7%A0%81-(-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86.html" rel="alternate" type="text/html" title="jQuery源码分析 (第一部分)" /><published>2017-03-06T00:00:00+08:00</published><updated>2017-03-06T00:00:00+08:00</updated><id>/2017/03/06/jQuery%E6%BA%90%E7%A0%81%20(%20%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86)</id><content type="html" xml:base="/2017/03/06/jQuery%E6%BA%90%E7%A0%81-(-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86.html">&lt;h1 id=&quot;第一章-总体架构&quot;&gt;第一章 总体架构&lt;/h1&gt;
+&lt;h2 id=&quot;11-设计理念&quot;&gt;1.1 设计理念&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Write Less, Do more。&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;兼容主流浏览器&lt;/li&gt;
+    &lt;li&gt;具有独特的链式语法&lt;/li&gt;
+    &lt;li&gt;具有高效灵活的CSS选择器&lt;/li&gt;
+    &lt;li&gt;拥有便捷的插件扩展机智和丰富的插件&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;12-总体架构&quot;&gt;1.2 总体架构&lt;/h2&gt;
+&lt;p&gt;jQuery模块分成三部分：入口模块、底层支持模块以及功能模块。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;在构造函数jQuery()创建对象时传入选择器表达式就会调用Sizzle选择器。
+    &lt;blockquote&gt;
+      &lt;p&gt;Sizzle是一款纯JS实现的CSS选择器引擎。&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;工具模块则提供了一些编程辅助方法，用于简化jQuery对象、DOM元素、数组、对象、字符串等操作。例如： jQuery.each()、 .each()、jQuery.map()、.map()、等，其他所有模块都会用到工具模块。&lt;/li&gt;
+  &lt;li&gt;底层支持模块，回调函数列表模块用于增强对回调函数的管理，支持添加、删除、触发、锁定、禁用回调函数等功能；异步队列模块则用于解耦异步任务和回调函数，他在回调或异步函数的基础上为回调函数增加了状态，并提供了多个回调函数列表，支持传播任意同步或者异步函数的成功或失败状态。等等。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;下面看一下jQuery源码的总体架构&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(function( window, undefiend ) {
+    //构造jQuery对象
+    var jQuery = (function() {
+        var jQuery = (function( selector, context ) {
+            return new jQuery.fn.init( selector, context, rootjQuery );
+        });
+        return jQuery;
+    })();
+}(window);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;那么问题来了：&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;为什么要创建一个自调用匿名函数？&lt;br /&gt;
+为什么要为自调用匿名函数设置一个参数window，并且传入window对象？&lt;br /&gt;
+为什么要为自调用匿名函数设置参数undefined？&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;前两个问题我知道，这里回答一下第三个问题
+通过把undefined作为函数参数使用，可以缩短查找undefined时候的作用域链，并且可以在压缩代码时进行优化。优化是这样进行的：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function( a, b ) {} (window);
+// 参数 window 被压缩成 a， 参数 undefined 被压缩成 b。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;更重要的是，这里可以确保undefined的值是undefined，因为undefined有可能被重写为新的值。可以用下面的代码来重写undefined的值。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;undefiend = 'now it's defined';
+console.log(undefined);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">第一章 总体架构 1.1 设计理念 Write Less, Do more。 兼容主流浏览器 具有独特的链式语法 具有高效灵活的CSS选择器 拥有便捷的插件扩展机智和丰富的插件</summary></entry><entry><title type="html">今天，我的博客开通了</title><link href="/2017/03/05/hello-world.html" rel="alternate" type="text/html" title="今天，我的博客开通了" /><published>2017-03-05T00:00:00+08:00</published><updated>2017-03-05T00:00:00+08:00</updated><id>/2017/03/05/hello-world</id><content type="html" xml:base="/2017/03/05/hello-world.html">&lt;h2 id=&quot;今天我的博客开通了&quot;&gt;今天，我的博客开通了&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;我的第一篇文章&lt;/li&gt;
+  &lt;li&gt;今天再一次使用了jekyll模版, 上一次使用还是两年前~ 由于当时有别的东西吸引了我的注意，所以并没有传承写博客的优良传统。&lt;/li&gt;
+  &lt;li&gt;这次再次启动jekyll，希望能督促我，让我坚持做博客记录~&lt;/li&gt;
+  &lt;li&gt;这里将记录我的心情，学习记录，还会更新一些有趣的东西~&lt;/li&gt;
+  &lt;li&gt;05 Mar 2017&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">今天，我的博客开通了 我的第一篇文章 今天再一次使用了jekyll模版, 上一次使用还是两年前~ 由于当时有别的东西吸引了我的注意，所以并没有传承写博客的优良传统。 这次再次启动jekyll，希望能督促我，让我坚持做博客记录~ 这里将记录我的心情，学习记录，还会更新一些有趣的东西~ 05 Mar 2017</summary></entry></feed>
