@@ -1,0 +1,16 @@
+
+# site info
+title: YANYIGE's Blog
+description: Write less, do more
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-cayman
+author: yanyige
+
+# about paginate
+paginate_path: page:num
+paginate: 5
+
+
+# Gems
+gems: [jekyll-paginate]
