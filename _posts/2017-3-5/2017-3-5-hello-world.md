@@ -1,6 +1,9 @@
 ---
 layout: default
 title: 今天，我的博客开通了
+tags: 日记
+excerpt: 第一篇记录
+date: 2017-3-5 15:19:44
 ---
 ## {{ page.title }}
 - 我的第一篇文章
