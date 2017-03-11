@@ -6,7 +6,7 @@ show_downloads: true
 google_analytics:
 theme: jekyll-theme-cayman
 author: yanyige
-
+baseurl: /blog
 
 permalink: /blog/:year/:month/:day/:title.html
 
