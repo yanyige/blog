@@ -8,7 +8,7 @@ layout: default
 {% endfor %}
 --------------------------------------------------------------
 {% for post in paginator.posts %}
-  <h1><a href="/blog/{{ post.url }}">{{ post.title }}</a></h1>
+  <h1><a href="{{ post.url }} | prepend: site.baseurl">{{ post.title }}</a></h1>
   <p>
   	<span class="author"></span>
     <span class="date">{{ post.date }}</span>
