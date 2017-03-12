@@ -1,7 +1,7 @@
 ---
 layout: posts
 title: Javascript高级编程(1-3章)
-tags: 前端, javascript
+tags: 前端 javascript
 category: javascriptaa
 excerpt: 以太工作室第一次培训内容。
 date: 15:56 2017/3/6

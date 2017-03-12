@@ -23,10 +23,22 @@
 }
 
 .post-title {
-	font-size: .8em;
+	font-size: 1.8rem;
 }
 
 .author, .date {
-	font-size: .4em;
+	font-size: 1rem;
 	color: grey;
+}
+
+.index-tags-wrapper {
+	position: absolute;
+	margin-top: -1.4rem;
+	font-size: .8rem;
+}
+
+.index-tags {
+	border: 1px solid gray;
+	padding: 0 .2rem;
+	margin-left: .5rem;
 }
