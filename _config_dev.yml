@@ -10,8 +10,8 @@ author: yanyige
 #permalink: /blog/:year/:month/:day/:title.html
 
 # about paginate
-#paginate_path: page:num
-#paginate: 5
+paginate_path: page:num
+paginate: 5
 
 
 # Gems
