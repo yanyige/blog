@@ -11,7 +11,7 @@ author: yanyige
 
 # about paginate
 paginate_path: page:num
-paginate: 5
+paginate: 10
 
 
 # Gems
