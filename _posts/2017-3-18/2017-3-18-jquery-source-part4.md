@@ -1,6 +1,6 @@
 ---
 layout: default
-title: jQuery源码分析 jQuery.Callbacks(flags) (第四部分)
+title: jQuery源码分析 jQuery.Callbacks(flags)
 tags: 前端 jQuery
 category: jQuery
 excerpt: 学习笔记, Sizzle选择器介绍，一款纯JavaScript 实现的CSS选择器引擎。
@@ -44,7 +44,7 @@ $.ajax('ajax/text.html')
     }
  });
  ```
- ## 4.1 jQuery.Callbacks(flags)
+## 4.1 jQuery.Callbacks(flags)
  
  方法jQuery.Callbacks(flags)返回一个链式工具对象，用于管理一组回调函数，我们把返回的链式工具称为“回调函数列表”。
  
