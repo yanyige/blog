@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: posts
 title: 排序算法(cavans,可视化)
 tags: canvas algoritm javascript
 category: javascript

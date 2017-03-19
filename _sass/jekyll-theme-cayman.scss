@@ -142,7 +142,28 @@ a {
   }
 }
 
+
 .main-content {
+
+  .page-title {
+    @include large {
+      text-align: center;
+      margin-top: 2rem;
+      font-weight: normal;
+      color: black;
+      font-size: 2.2em;
+      margin-bottom: 0;
+    }
+  }
+  .page-info {
+    @include large {
+      text-align: center;
+      font-weight: normal;
+      color: black;
+      margin: 0;
+    }
+  }
+
   word-wrap: break-word;
 
   :first-child {

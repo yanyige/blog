@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: posts
 title: 今天，我的博客开通了
 tags: 日记
 excerpt: 第一篇记录
