@@ -8,6 +8,8 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/default.css' | prepend: site.baseurl | replace: '//', '/' }}">
+    <script type="text/javascript" src="{{ '/assets/js/jquery-3.1.1.min.js' | prepend: site.baseurl }}"></script>
+    <script type="text/javascript" src="{{ '/assets/js/default.js' | prepend: site.baseurl }}"></script>
   </head>
   <body>
     <section class="page-header">
@@ -23,8 +25,18 @@
     </section>
 
     <section class="main-content">
-      {{ content }}
+      <article class="left part">
+        {{ content }}
+      </article>
+      <article class="right part">
+        <aside class="page-catalog">
+          <p class="p-catalog">目录</p>
+        </aside>
+      </article>
 
+      <article class="back-top">
+        <img src="{{ '/assets/images/go-top.png' | prepend: site.baseurl }}">
+      </article>
       <footer class="site-footer">
         {% if site.github.is_project_page %}
           <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>

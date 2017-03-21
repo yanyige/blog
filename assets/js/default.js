@@ -15,7 +15,7 @@ $(document).ready(function() {
 				var _p = $("<p class=tab" + _layer +  "></p>");
 				$(_p).addClass("tab");
 				$(_p).attr("data-id", "menuID" + id);
-				$(_p).text($(item).text());
+				$(_p).text($(item).find("a").text());
 				$(_p).click(function() {
 					let _item = $("#" + $(this).data("id"));
 					$.scrollTo($(_item));
@@ -38,10 +38,10 @@ $(document).ready(function() {
 		},500);
 	};
 
-	const catalogHeight = $('.page-catalog').offset().top;
 	let preTop;
 	let nowTop;
-	$(window).scroll(function(e){
+	const catalogHeight = $('.page-catalog').offset().top;
+	$(window).scroll(function(){
 		let scrollTop = $(document).scrollTop();
 		let nowItem = 0;
 		itemHeight.map(function(item, index) {
@@ -59,22 +59,22 @@ $(document).ready(function() {
 			$('.page-catalog').addClass('absolute');
 		}
 		// console.log(scrollTop + "   " + catalogHeight);
-
-
-        function waitDoing(){
+		jQuery.showBackUp = (function (){
             nowTop = $(window).scrollTop();
-            console.log(nowTop);
 			if(nowTop > preTop && scrollTop > catalogHeight) {
-				// $('.back-top').css('animate', 'mymove 400ms ease 1 forwards');
-				console.log('...');
+				$('.back-top').css('animate', 'mymove 400ms ease 1 forwards');
+				$('.back-top').css('display', ' block');
             } else {
-            	$('.back-top').css('display', ' none');
-            	console.log('???');
+            	$('.back-top').hide(1000);
             }
             preTop = nowTop;
 
-        }
-        waitDoing();
+        })();
+	});
 
+	$('.back-top').click(function() {
+		$('html, body').animate({
+			scrollTop: 0,
+		},500);
 	});
 });
