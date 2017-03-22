@@ -16,7 +16,7 @@ description: Jekyll 中使用标签得到文章。
 	<div class="tags-title fa fa-tag fa-2x" id="{{ tag.first }}"><span>{{ tag.first }}</span></div>
 		{% for article in tag.last %}
 		<article class="article">
-			<a href="{{ site.url | prepend: site.baseurl }}{{ article.url }}">{{ article.title }}
+			<a href="{{ site.url }}{{ article.url | prepend: site.baseurl }}">{{ article.title }}
 			<span class="article-excerpt">{{ article.excerpt }}</span></a>
 		</article>
 		<hr>
