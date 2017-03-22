@@ -59,22 +59,21 @@ $(document).ready(function() {
 			$('.page-catalog').addClass('absolute');
 		}
 		// console.log(scrollTop + "   " + catalogHeight);
-
-
-        function waitDoing(){
+		jQuery.showBackUp = (function (){
             nowTop = $(window).scrollTop();
-            console.log(nowTop);
 			if(nowTop > preTop && scrollTop > catalogHeight) {
-				// $('.back-top').css('animate', 'mymove 400ms ease 1 forwards');
-				console.log('...');
+				$('.back-top').css('display', ' block');
             } else {
-            	$('.back-top').css('display', ' none');
-            	console.log('???');
+            	$('.back-top').hide(1000);
             }
             preTop = nowTop;
 
-        }
-        waitDoing();
+        })();
+	});
 
+	$('.back-top').click(function() {
+		$('html, body').animate({
+			scrollTop: 0,
+		},500);
 	});
 });

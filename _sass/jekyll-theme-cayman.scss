@@ -3,8 +3,14 @@
 @import "variables";
 @import "index";
 
+@mixin larger {
+  @media screen and (min-width: #{$larger-breakpoint}) {
+    @content;
+  }
+}
+
 @mixin large {
-  @media screen and (min-width: #{$large-breakpoint}) {
+  @media screen and (min-width: #{$large-breakpoint}) and (max-width: #{$larger-breakpoint}) {
     @content;
   }
 }
@@ -66,6 +72,10 @@ a {
     margin-left: 1rem;
   }
 
+  @include larger {
+    padding: 0.75rem 1rem;
+  }
+
   @include large {
     padding: 0.75rem 1rem;
   }
@@ -94,6 +104,10 @@ a {
   background-color: $header-bg-color;
   background-image: linear-gradient(120deg, $header-bg-color-secondary, $header-bg-color);
 
+  @include larger {
+    padding: 5rem 6rem;
+  }
+
   @include large {
     padding: 5rem 6rem;
   }
@@ -110,6 +124,10 @@ a {
 .project-name {
   margin-top: 0;
   margin-bottom: 0.1rem;
+
+  @include larger {
+    font-size: 3.25rem;
+  }
 
   @include large {
     font-size: 3.25rem;
@@ -129,6 +147,10 @@ a {
   font-weight: normal;
   opacity: 0.7;
 
+  @include larger {
+    font-size: 1.25rem;
+  }
+
   @include large {
     font-size: 1.25rem;
   }
@@ -146,6 +168,14 @@ a {
 .main-content {
 
   .page-title {
+    @include larger {
+      text-align: center;
+      margin-top: 2rem;
+      font-weight: normal;
+      color: black;
+      font-size: 2.2em;
+      margin-bottom: 0;
+    }
     @include large {
       text-align: center;
       margin-top: 2rem;
@@ -156,6 +186,12 @@ a {
     }
   }
   .page-info {
+    @include larger {
+      text-align: center;
+      font-weight: normal;
+      color: black;
+      margin: 0;
+    }
     @include large {
       text-align: center;
       font-weight: normal;
@@ -167,6 +203,10 @@ a {
   .part {
     display: inline-block;
     &.left {
+      @include larger {
+        max-width: 50rem;
+        padding-right: 1rem;
+      }
       @include large {
         max-width: 50rem;
         padding-right: 1rem;
@@ -174,6 +214,9 @@ a {
     }
     &.right {
       vertical-align: top;
+      @include larger {
+        max-width: calc(14rem - 10px);
+      }
       @include large {
         max-width: calc(14rem - 10px);
       }
@@ -204,34 +247,57 @@ a {
       }
     }
     .tab1 {
+      @include larger {
+        padding-left: 0em;
+        font-size: 0.9rem;
+      }
       @include large {
         padding-left: 0em;
         font-size: 0.9rem;
       }
     }
     .tab2 {
+      @include larger {
+        padding-left: 1em;
+        font-size: 0.8rem;
+      }
       @include large {
         padding-left: 1em;
         font-size: 0.8rem;
       }
     }
     .tab3 {
+      @include larger {
+        padding-left: 2em;
+        font-size: 0.7rem;
+      }
       @include large {
         padding-left: 2em;
         font-size: 0.7rem;
       }
     }
     .tab4 {
+      @include larger {
+        padding-left: 3em;
+        font-size: 0.6rem;
+      }
       @include large {
         padding-left: 3em;
         font-size: 0.6rem;
       }
     }
     .tab5 {
+      @include larger {
+        padding-left: 4em;
+        font-size: 0.5rem;
+      }
       @include large {
         padding-left: 4em;
         font-size: 0.5rem;
       }
+    }
+    @include larger {
+      max-width: 20rem;
     }
     @include large {
       max-width: 20rem;
@@ -243,6 +309,13 @@ a {
 
   :first-child {
     margin-top: 0;
+  }
+
+  @include larger {
+    max-width: 64rem;
+    padding: 2rem 0rem;
+    margin: 0 auto;
+    font-size: 1.1rem;
   }
 
   @include large {
@@ -416,16 +489,25 @@ a {
 
   .back-top {
     position: fixed;
-    display: block;
-    right: 5rem;
-    bottom: 5rem;
+    // display: none;
+    // right: 5rem;
+    bottom: 3rem;
     img {
       width: 5rem;
     }
     cursor: pointer;
-    animation-fill-mode:forwards;
-    -webkit-animation-fill-mode:forwards;
-    animation: mymove 400ms ease 1 forwards;
+    @include larger {
+      animation: mymove-larger 400ms ease 1 forwards;
+    }
+    @include large {
+      animation: mymove-large 400ms ease 1 forwards;
+    }
+    @include medium {
+      animation: mymove-medium 400ms ease 1 forwards;
+    }
+    @include small {
+      animation: mymove-small 400ms ease 1 forwards;
+    }
   }
 }
 
@@ -433,6 +515,10 @@ a {
   padding-top: 2rem;
   margin-top: 2rem;
   border-top: solid 1px $hr-border-color;
+
+  @include larger {
+    font-size: 1rem;
+  }
 
   @include large {
     font-size: 1rem;
@@ -457,11 +543,20 @@ a {
 }
 
 
-@keyframes mymove
+@keyframes mymove-larger
 {
-  0%   {right: 15rem; transform:rotate(0deg);}
-  25%  {right: 20rem; transform:rotate(90deg);}
-  50%  {right: 25rem; transform:rotate(180deg);}
-  75%  {right: 30rem; transform:rotate(270deg);}
-  100%  {right: 35rem; transform:rotate(360deg);}
+  0%   {margin-left: 20rem; transform:rotate(0deg);}
+  25%  {margin-left: 14rem; transform:rotate(90deg);}
+  50%  {margin-left: 8rem; transform:rotate(180deg);}
+  75%  {margin-left: 2rem; transform:rotate(270deg);}
+  100%  {margin-left: 0rem; transform:rotate(360deg);}
+}
+
+@keyframes mymove-large
+{
+  0%   {margin-left: 20rem; transform:rotate(0deg);}
+  25%  {margin-left: 14rem; transform:rotate(90deg);}
+  50%  {margin-left: 8rem; transform:rotate(180deg);}
+  75%  {margin-left: 2rem; transform:rotate(270deg);}
+  100%  {margin-left: 0rem; transform:rotate(360deg);}
 }

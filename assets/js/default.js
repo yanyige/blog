@@ -42,6 +42,7 @@ $(document).ready(function() {
 	let nowTop;
 	const catalogHeight = $('.page-catalog').offset().top;
 	$(window).scroll(function(){
+		nowTop = $(window).scrollTop();
 		let scrollTop = $(document).scrollTop();
 		let nowItem = 0;
 		itemHeight.map(function(item, index) {
@@ -60,16 +61,43 @@ $(document).ready(function() {
 		}
 		// console.log(scrollTop + "   " + catalogHeight);
 		jQuery.showBackUp = (function (){
-            nowTop = $(window).scrollTop();
 			if(nowTop > preTop && scrollTop > catalogHeight) {
-				$('.back-top').css('animate', 'mymove 400ms ease 1 forwards');
 				$('.back-top').css('display', ' block');
             } else {
             	$('.back-top').hide(1000);
             }
-            preTop = nowTop;
-
         })();
+
+        // jQuery.navOpacity = (function() {
+	       //  scrollHeight = document.documentElement.scrollTop || document.body.scrollTop;
+	       //  var targetHeight = $('.page-header').outerHeight();
+	       //  var opacity = (1 - (targetHeight - scrollHeight) / targetHeight);
+	       //  opacity = opacity == 0 ? 0:1;
+	       //  if(scrollHeight) {
+	       //  	$('.nav-header').css('color', 'black');
+	       //  	$('.nav-header').css('background-color', 'rgba(255, 255, 255, '+opacity+')');
+	       //  } else {
+	       //  	$('.nav-header a').css('color', 'white');
+	       //  	$('.nav-header').css('background', 'transparent');
+	       //  }
+        // })();
+
+
+        if(scrollTop == 0) {
+        	if(!$('.nav-header').hasClass('show-top')){
+        		$('.nav-header').removeClass('show-bottom').removeClass('show-medium').addClass('show-top');
+        	}
+        	console.log('b');
+        } else if(scrollTop < $('.page-header').outerHeight()) {
+        	$('.nav-header').removeClass('show-top').removeClass('show-bottom').addClass('show-medium');
+        	console.log('a');
+        } else {
+        	if(!$('.nav-header').hasClass('show-bottom')){
+        		$('.nav-header').removeClass('show-top').removeClass('show-medium').addClass('show-bottom');
+        	}
+        }
+
+        preTop = nowTop;
 	});
 
 	$('.back-top').click(function() {

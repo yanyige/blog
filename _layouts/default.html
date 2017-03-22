@@ -12,6 +12,15 @@
     <script type="text/javascript" src="{{ '/assets/js/default.js' | prepend: site.baseurl }}"></script>
   </head>
   <body>
+    <section class="nav-header">
+      <p class="nav-logo">
+        <a href="#">YYG BLOG</a>
+      </p>
+      <ul class="nav-right">
+        <li><a href="#">HOME</a></li>
+        <li><a href="http://www.yyg233.cn/">ABOUT</a></li>
+      </ul>
+    </section>
     <section class="page-header">
       <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
@@ -32,11 +41,12 @@
         <aside class="page-catalog">
           <p class="p-catalog">目录</p>
         </aside>
+        <article class="back-top">
+          <img src="{{ '/assets/images/go-top.png' | prepend: site.baseurl }}">
+        </article>
       </article>
 
-      <article class="back-top">
-        <img src="{{ '/assets/images/go-top.png' | prepend: site.baseurl }}">
-      </article>
+
       <footer class="site-footer">
         {% if site.github.is_project_page %}
           <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
