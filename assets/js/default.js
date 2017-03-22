@@ -87,10 +87,8 @@ $(document).ready(function() {
         	if(!$('.nav-header').hasClass('show-top')){
         		$('.nav-header').removeClass('show-bottom').removeClass('show-medium').addClass('show-top');
         	}
-        	console.log('b');
         } else if(scrollTop < $('.page-header').outerHeight()) {
         	$('.nav-header').removeClass('show-top').removeClass('show-bottom').addClass('show-medium');
-        	console.log('a');
         } else {
         	if(!$('.nav-header').hasClass('show-bottom')){
         		$('.nav-header').removeClass('show-top').removeClass('show-medium').addClass('show-bottom');
