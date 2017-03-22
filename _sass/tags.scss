@@ -30,8 +30,8 @@
 	span {
 		font-family: $body-text-font;
 		margin-left: 15px;
-		font-size: 1.6rem;
-		color: black;
+		font-size: 2rem;
+		color: #44B570;
 	}
 	list-style: none;
 }
@@ -40,10 +40,14 @@
 	margin: 20px 0;
 	font-size: 1.2rem;
 	a {
-		color: #44B570;
+		color: black;
 	}
 	.article-excerpt {
 		display: block;
 		font-size: 1rem;
 	}
+}
+
+.tag-wrapper {
+	margin: 20px 0;
 }
