@@ -1,0 +1,49 @@
+.tags {
+	display: inline-block;
+	list-style: none;
+	a {
+		display: inline-block;
+	    border: 1px solid rgba(255,255,255,.8);
+	    border-radius: 999em;
+	    padding: 0 10px;
+	    color: #fff;
+	    line-height: 24px;
+	    font-size: 12px;
+	    text-decoration: none;
+	    margin: 0 1px;
+	    margin-bottom: 6px;
+	    font-size: 14px;
+	    border: none;
+	    line-height: 28px;
+	    margin: 0 2px;
+	    margin-bottom: 8px;
+	    background: #D6D6D6;
+	}
+	.tag-size {
+		font-size: .8em;
+	    vertical-align: super;
+	    padding-left: 2px;
+	}
+}
+
+.tags-title {
+	span {
+		font-family: $body-text-font;
+		margin-left: 15px;
+		font-size: 1.6rem;
+		color: black;
+	}
+	list-style: none;
+}
+
+.article {
+	margin: 20px 0;
+	font-size: 1.2rem;
+	a {
+		color: #44B570;
+	}
+	.article-excerpt {
+		display: block;
+		font-size: 1rem;
+	}
+}

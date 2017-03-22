@@ -2,6 +2,7 @@
 @import "rouge-github";
 @import "variables";
 @import "index";
+@import "tags";
 
 @mixin larger {
   @media screen and (min-width: #{$larger-breakpoint}) {

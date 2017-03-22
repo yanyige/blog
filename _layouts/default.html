@@ -14,11 +14,12 @@
   <body>
     <section class="nav-header">
       <p class="nav-logo">
-        <a href="#">YYG BLOG</a>
+        <a href="/">YYG BLOG</a>
       </p>
       <ul class="nav-right">
-        <li><a href="#">HOME</a></li>
+        <li><a href="{{ '/' | prepend: site.baseurl }}">HOME</a></li>
         <li><a href="http://www.yyg233.cn/">ABOUT</a></li>
+        <li><a href="{{ '/tags' | prepend: site.baseurl }}">TAGS</a></li>
       </ul>
     </section>
     <section class="page-header">

@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 	let itemHeight = new Array();
 
+
 	jQuery.showCatalog = function(dom) {
 		let elems = $('.left').children();
 		let wrapper = $('.page-catalog');
@@ -29,7 +30,9 @@ $(document).ready(function() {
 		});
 	}
 
-	$.showCatalog($('.page-catalog'));
+	if($('.page-catalog').length) {
+		$.showCatalog($('.page-catalog'));
+	}
 
 	jQuery.scrollTo = function(dom) {
 		let height = dom.offset().top;
@@ -40,7 +43,9 @@ $(document).ready(function() {
 
 	let preTop;
 	let nowTop;
-	const catalogHeight = $('.page-catalog').offset().top;
+	if($('.page-catalog').length) {
+		var catalogHeight = $('.page-catalog').offset().top;
+	}
 	$(window).scroll(function(){
 		nowTop = $(window).scrollTop();
 		let scrollTop = $(document).scrollTop();
@@ -54,19 +59,22 @@ $(document).ready(function() {
 		$('.tab').eq(nowItem).addClass('on').siblings().removeClass('on');
 
 
-		if(scrollTop < catalogHeight) {
-			$('.page-catalog').removeClass('absolute');
-		} else {
-			$('.page-catalog').addClass('absolute');
-		}
+		if($('.page-catalog').length) {
+			if(scrollTop < catalogHeight) {
+				$('.page-catalog').removeClass('absolute');
+			} else {
+				$('.page-catalog').addClass('absolute');
+			}
+
 		// console.log(scrollTop + "   " + catalogHeight);
-		jQuery.showBackUp = (function (){
-			if(nowTop > preTop && scrollTop > catalogHeight) {
-				$('.back-top').css('display', ' block');
-            } else {
-            	$('.back-top').hide(1000);
-            }
-        })();
+			jQuery.showBackUp = (function (){
+				if(nowTop > preTop && scrollTop > catalogHeight) {
+					$('.back-top').css('display', ' block');
+	            } else {
+	            	$('.back-top').hide(1000);
+	            }
+	        })();
+	    }
 
         // jQuery.navOpacity = (function() {
 	       //  scrollHeight = document.documentElement.scrollTop || document.body.scrollTop;
