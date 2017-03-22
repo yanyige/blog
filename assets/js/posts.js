@@ -29,7 +29,9 @@ $(document).ready(function() {
 		});
 	}
 
-	$.showCatalog($('.page-catalog'));
+	if($('.page-catalog').length) {
+		$.showCatalog($('.page-catalog'));
+	}
 
 	jQuery.scrollTo = function(dom) {
 		let height = dom.offset().top;
@@ -38,10 +40,13 @@ $(document).ready(function() {
 		},500);
 	};
 
-	const catalogHeight = $('.page-catalog').offset().top;
 	let preTop;
 	let nowTop;
+	if($('.page-catalog').length) {
+		var catalogHeight = $('.page-catalog').offset().top;
+	}
 	$(window).scroll(function(e){
+		nowTop = $(window).scrollTop();
 		let scrollTop = $(document).scrollTop();
 		let nowItem = 0;
 		itemHeight.map(function(item, index) {
@@ -53,19 +58,21 @@ $(document).ready(function() {
 		$('.tab').eq(nowItem).addClass('on').siblings().removeClass('on');
 
 
-		if(scrollTop < catalogHeight) {
-			$('.page-catalog').removeClass('absolute');
-		} else {
-			$('.page-catalog').addClass('absolute');
-		}
-		// console.log(scrollTop + "   " + catalogHeight);
-		jQuery.showBackUp = (function (){
-			if(nowTop > preTop && scrollTop > catalogHeight) {
-				$('.back-top').css('display', ' block');
-            } else {
-            	$('.back-top').hide(1000);
-            }
-        })();
+		if($('.page-catalog').length) {
+			if(scrollTop < catalogHeight) {
+				$('.page-catalog').removeClass('absolute');
+			} else {
+				$('.page-catalog').addClass('absolute');
+			}
+
+			jQuery.showBackUp = (function (){
+				if(nowTop > preTop && scrollTop > catalogHeight) {
+					$('.back-top').css('display', ' block');
+	            } else {
+	            	$('.back-top').hide(1000);
+	            }
+	        })();
+	    }
 
         // jQuery.navOpacity = (function() {
 	       //  scrollHeight = document.documentElement.scrollTop || document.body.scrollTop;
