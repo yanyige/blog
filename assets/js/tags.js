@@ -13,8 +13,6 @@
     // Sizes
 
     if (opts.size) {
-      console.log('end=' + opts.size.end);
-      console.log('start=' + opts.size.start);
       fontIncr = (opts.size.end - opts.size.start)/range;
     }
     // Colors
