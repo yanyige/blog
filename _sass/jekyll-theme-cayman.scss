@@ -44,7 +44,7 @@ body {
 a {
   color: $body-link-color;
   text-decoration: none;
-
+  font-weight: $body-link-font;
   &:hover {
     text-decoration: none;
     color: grey;
@@ -188,7 +188,7 @@ a {
   }
   .page-info {
     @include larger {
-      text-align: center;
+      // text-align: center;
       font-weight: normal;
       color: black;
       margin: 0;
