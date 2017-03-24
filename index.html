@@ -9,8 +9,9 @@ layout: default
 -->
 {% for post in paginator.posts %}
     <h1><a class="post-title" href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">{{ post.title }}</a>
+    </h1>
     <span class="author">作者:{{ site.author }}</span>
-    <span class="date">{{ post.date | date: '%Y年%m月%d日 %H:%M' }}</span></h1>
+    <span class="date">{{ post.date | date: '%Y年%m月%d日 %H:%M' }}</span>
     <p class="index-tags-wrapper">tags:{% for _tag in post.tags %}<span class="index-tags">{{ _tag }}</span>{% endfor %}</p>
     <p>{{ post.excerpt }}</p>
 {% endfor %}
