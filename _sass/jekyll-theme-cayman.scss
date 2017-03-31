@@ -118,7 +118,7 @@ a {
   }
 
   @include small {
-    padding: 2rem 1rem;
+    padding: 4rem 1rem 0.3rem;
   }
 }
 
@@ -228,9 +228,12 @@ a {
   }
 
   .page-catalog {
+    @include small {
+      display: none;
+    }
     &.absolute {
       position: fixed;
-      top: 0;
+      top: 3.6rem;
     }
     p {
       margin: 0.3rem 0;

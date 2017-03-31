@@ -1,3 +1,27 @@
+@mixin larger {
+  @media screen and (min-width: #{$larger-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media screen and (min-width: #{$large-breakpoint}) and (max-width: #{$larger-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media screen and (min-width: #{$medium-breakpoint}) and (max-width: #{$large-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media screen and (max-width: #{$medium-breakpoint}) {
+    @content;
+  }
+}
+
 .nav-header {
 	min-height: 30px;
 	line-height: 30px;
@@ -18,6 +42,19 @@
 		margin-left: 25px;
 	}
 	.nav-right {
+		@include small {
+			display: none;
+		    position: absolute;
+		    right: 0;
+		    padding: 0;
+			margin-right: 25px;
+			margin-top: 50px;
+			background-color: white;
+			padding: 0 20px;
+			// border: 1px solid #e7e7e7;
+		    box-shadow: rgba(0,0,0,.117647) 0 1px 6px,rgba(0,0,0,.239216) 0 1px 4px;
+	        border-radius: 2px;
+		}
 		float: right;
 		li {
 			display: inline-block;
@@ -27,8 +64,26 @@
 			a:hover {
 				color: #e7e7e7;
 			}
+			@include small {
+				display: block;
+				margin: 20px 0;
+				a {
+					color: grey;
+				}
+			}
 		}
 		margin-right: 45px;
+	}
+	.menu-icon {
+		width: 30px;
+		float: right;
+		margin: 1em 0;
+		margin-right: 25px;
+		span {
+		    height: 3px;
+		    display: block;
+		    background-color: white;
+		}
 	}
 
 	&.show-top {
@@ -38,6 +93,11 @@
 			color: white;
 			text-decoration: none;
 			list-style: none;
+		}
+		.menu-icon {
+			span {
+				background-color: white;
+			}
 		}
     	// border-bottom: 1px solid #e7e7e7;
 	}
@@ -49,6 +109,11 @@
 			text-decoration: none;
 			list-style: none;
 		}
+		.menu-icon {
+			span {
+				background-color: black;
+			}
+		}
 	}
 	&.show-bottom {
 		background-color: rgba(255,255,255,0.8);
@@ -57,6 +122,11 @@
 			color: black;
 	    	text-decoration: none;
 	    	list-style: none;
+		}
+		.menu-icon {
+			span {
+				background-color: black;
+			}
 		}
 	}
 

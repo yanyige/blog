@@ -2,6 +2,16 @@ $(document).ready(function() {
 
 	let itemHeight = new Array();
 
+	jQuery.showNav = function() {
+		$('.menu-icon').click(function() {
+			if($('.nav-right').is(':visible')) {
+				$('.nav-right').fadeOut();
+			} else {
+				$('.nav-right').fadeIn();
+			}
+		});
+	}
+	$.showNav();
 
 	jQuery.showCatalog = function(dom) {
 		let elems = $('.left').children();
