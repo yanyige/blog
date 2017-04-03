@@ -33,3 +33,154 @@ date: 2017-3-31 16:27
 | 14|状态           | deferred.isRejected() | 判断异步队列是否已经被设置为失败状态, 不建议使用  |
 | 15|工具          | deferred.pipe() | 返回一个新的异步队列的只读副本, 通过过滤函数过滤当前异步队列的状态和值  |
 | 16|工具          | deferred.promise(target) | 返回一个新的异步队列的只读副本, 为普通对象增加异步队列的功能  |
+
+### 4.2.1 实现原理和总体架构
+异步队列内部维护了三个回调函数列表: 成功回调函数列表、失败回调函数列表和消息回调函数列表。其他方法则围绕这三个列表进行操作和检测。 总体源码结构如下：
+```
+jQuery.extend({
+    Deferred: function(func) {
+        var doneList = jQuery.Callbacks('once memory'),
+        var failList = jQuery.Callbacks('once memory'),
+        var progressList = jQuery.Callbacks('memory'),
+        
+        state = "pending",
+        
+        promise = {
+            //done, fail, progress,
+            //state, isResolved, isRejected
+            //then, always
+            //pipe
+            //promise
+        },
+        deferred = promise.promise({}),
+        key,
+        lists = {
+            resolve: doneList,
+            reject: failList,
+            notify: progressList
+        };
+        
+        for(key in lists) {
+            deferred[ key ] = lists[ key ].fire;
+            deferred[ key = "With" ] = lists[ key ].fireWith;
+        }
+        
+        deferred.done( function() {
+            state = "resolved";
+        }, failList.disable, progressList.lock ).fail( function() {
+            state = "rejected";
+        }, doneList.disable, progressList.lock );
+        
+        if(func) {
+            func.call(deferred, deferred);
+        }
+        
+        return deferred;
+    },
+})
+```
+
+### 4.2.2 源码分析
+
+方法jQuery.Deferred(func)创建异步队列的5个关键步骤如下：
+1. 创建成功、失败、消息回调函数列表, 设置初始状态为待定(pending)。
+2. 创建异步队列只读副本promise, 其中包含了方法done(), fail(), progress(), state(), isResolved(), isRejected(), then(), always(), pipe(), promise()。
+3. 定义异步队列deferred。
+    1. 把只读副本promise中的方法添加到异步队列deferred中
+    2. 为异步队列deferred添加触发执行成功、失败、消息回调函数的方法, 包括resolve()、resolveWith()、reject()、rejectWith()、notify()、notifyWith()。
+    3. 为异步队列deferred添加设置状态的回调函数。
+4. 如果传入func, 则调用。
+5. 返回异步队列deferred。
+
+
+#### 1. 定义jQuery.Deferred(func)
+```
+jQuery.extend({
+    Deferred: function(func) {}
+})
+```
+deferred()接受一个参数, 在返回异步队列前会被调用。在func执行的过程中可以添加回调函数, 例如调用deferred.then()。
+
+#### 2. 创建成功、失败、消息函数列表, 设置状态为pending
+
+```
+var doneList = jQuery.Callbacks('once memory'),
+var failList = jQuery.Callbacks('once memory'),
+var progressList = jQuery.Callbacks('memory'),
+
+state = "pending",
+
+lists = {
+    resolve: doneList,
+    reject: failList,
+    notify: progressList
+}
+```
+> 后面的代码会通过遍历lists中的属性来给异步队列添加方法, 可以减少实现代码的行数, 是值得学习的技巧。
+
+#### 3.创建异步队列的只读副本promise
+##### (1)方法deferred.done(), deferred.fail(), deferred.progress()  
+方法**deferred.done()**, **deferred.fail()**, **deferred.progress()**  , 分别用于添加成功回调函数、失败回调函数、消息回调函数到对应的回调函数列表中, 这三个方法只是简单引用对应的回调函数列表的方法callbacks.add(), 相关代码如下：
+```
+promise = {
+    done: doneList.add,
+    fail: failList.add,
+    progress: progressList.add,
+}
+```
+##### (2)方法deferred.state(), deferred.isResolved, deferred.isRejected。
+方法**deferred.state()**, **deferred.isResolved()**, **deferred.isRejected()** 用于返回异步队列的状态。
+如果方法deferred.state()返回"resolved", 意味着deferred.resolve()或者deferred.resolveWith()已经被调用, 成功回调函数正在执行或者已经被执行。
+```
+state: function() {
+    return state;
+},
+```
+
+##### (3)便捷方法deferred.then(doneCallbacks, failCallbacks, progressCallbacks)、deferred.always(alwaysCallbacks[, alwaysCallbacks])  
+
+便捷方法**deferred.then(doneCallbacks, failCallbacks**用于同时添加成功回调函数或者失败回调函数、消息回调函数到对应的回调函数列表中。
+
+便捷方法**deferred.always(alwaysCallbacks[, alwaysCallbacks])** 用于将回调函数同时添加到回调函数列表doneList和失败回调函数列表failList, 即保存两份引用, 当异步队列处于成功或者失败状态时被调用。
+```
+then: function(doneCallbacks, failCallbacks, progressCallbacks) {
+    deferred.done(doneCallbacks).fail(failCallbacks).progress(progressCallbacks);
+    return this;
+},
+always: function() {
+    deferred.done.apply(deferred, arguments).fail.apply(deferred, arguments);
+    return this;
+}
+```
+
+##### (4)工具方法deferred.pipe(fnDone, fnFail, fnProgress)
+**deferred.pipe(fnDone, fnFail, fnProgress)** 接受三个可选的过滤函数作为参数, 用于过滤当前异步队列的状态和参数, 并且返回一个新的异步队列的只读副本。 当前异步队列被触发时, 过滤函数将被调用并把返回值传给只读副本。
+
+```
+pipe: function(fnDone, fnFail, fnProgress) {
+    return jQuery.Deferred(function(newDefer) {
+        jQuery.each({
+            done: [fnDone, "resolve"],
+            fail: [fnFail, "reject"],
+            progress: [fnProgress, "notify"]
+        }, function(handler, data) {
+            var fn = data[0],
+                action = data[1],
+                returned;
+            if(jQuery.isFunction(fn) {
+                deferred[handler](function() {
+                    returned = fn.apply(this, arguments);
+                    if(returned && jQuery.isFunction 
+                    (returned.promise)) {
+                        returned.promise().then(newDefer.resolve,
+                        newDefer.reject, newDefer.notify);
+                    } else {
+                        newDefer[action + "With"] (this === deferred?newDefer: this, [returned]);
+                    }
+                });
+            }) else {
+                deferred[handler](newDefer[action]);
+            }
+        });
+    }).promise();
+}
