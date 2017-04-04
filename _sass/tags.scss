@@ -38,14 +38,21 @@
 
 .article {
 	margin: 20px 0;
-	font-size: 1.2rem;
 	a {
 		color: black;
 		font-weight: normal;
+		font-size: 1.3rem;
 	}
 	.article-excerpt {
 		display: block;
 		font-size: 1rem;
+		color: #606c71;
+	}
+	&:hover {
+		color: grey;
+		.article-excerpt {
+			color: grey;
+		}
 	}
 }
 

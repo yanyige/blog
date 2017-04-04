@@ -205,11 +205,11 @@ a {
     display: inline-block;
     &.left {
       @include larger {
-        max-width: 50rem;
+        width: 50rem;
         padding-right: 1rem;
       }
       @include large {
-        max-width: 50rem;
+        width: 50rem;
         padding-right: 1rem;
       }
     }
@@ -357,6 +357,7 @@ a {
 
   p {
     margin-bottom: 1em;
+    font-size: 1rem;
   }
 
   code {
