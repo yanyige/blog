@@ -180,3 +180,35 @@ $el.css({ color: "#ff0011" });
 // Native
 el.style.color = '#ff0011';
 ```
+
+- Add class
+
+```
+// jQuery
+$el.addClass(className);
+
+// Native
+el.classList.add(className);
+Remove class
+
+// jQuery
+$el.removeClass(className);
+
+// Native
+el.classList.remove(className);
+has class
+
+// jQuery
+$el.hasClass(className);
+
+// Native
+el.classList.contains(className);
+Toggle class
+
+// jQuery
+$el.toggleClass(className);
+
+// Native
+el.classList.toggle(className);
+```
+
