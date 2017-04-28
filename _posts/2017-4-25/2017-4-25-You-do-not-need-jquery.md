@@ -212,3 +212,55 @@ $el.toggleClass(className);
 el.classList.toggle(className);
 ```
 
+### Width & Height
+
+Width 与 Height 获取方法相同，下面以 Height 为例：
+
+Window height
+
+```
+// window height
+$(window).height();
+
+// 含 scrollbar
+window.document.documentElement.clientHeight;
+
+// 不含 scrollbar，与 jQuery 行为一致
+window.innerHeight;
+Document height
+
+// jQuery
+$(document).height();
+
+// Native
+const body = document.body;
+const html = document.documentElement;
+const height = Math.max(
+  body.offsetHeight,
+  body.scrollHeight,
+  html.clientHeight,
+  html.offsetHeight,
+  html.scrollHeight
+);
+Element height
+
+// jQuery
+$el.height();
+
+// Native
+function getHeight(el) {
+  const styles = this.getComputedStyle(el);
+  const height = el.offsetHeight;
+  const borderTopWidth = parseFloat(styles.borderTopWidth);
+  const borderBottomWidth = parseFloat(styles.borderBottomWidth);
+  const paddingTop = parseFloat(styles.paddingTop);
+  const paddingBottom = parseFloat(styles.paddingBottom);
+  return height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
+}
+
+// 精确到整数（border-box 时为 height - border 值，content-box 时为 height + padding 值）
+el.clientHeight;
+
+// 精确到小数（border-box 时为 height 值，content-box 时为 height + padding + border 值）
+el.getBoundingClientRect().height;
+```
