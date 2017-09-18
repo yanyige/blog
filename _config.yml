@@ -11,7 +11,7 @@ baseurl: /blog
 #permalink: /blog/:year/:month/:day/:title.html
 
 # about paginate
-paginate_path: page:num
+paginate_path: /page:num
 paginate: 10
 
 
